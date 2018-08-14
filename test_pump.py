@@ -33,10 +33,18 @@ def test_CCURlighttpd_service_exists(host, Process, Socket):
     assert host.file("/opt/MediaHawk/lib64/lighttpd").group == 'root'
 
 
-def test_CCURmhcm_service_exists(host):
+def test_CCURmhcm_service_exists(host, Process, Socket):
     service = host.service("CCURmhcm")
     assert service.is_enabled
     assert service.is_running
+    mhcm = Process.filter(comm="mhcm")
+    assert Socket("tcp://0.0.0.0:8040").is_listening
+    assert Socket("tcp://0.0.0.0:8072").is_listening
+    assert host.file("/var/log/mhcm.log").is_file
+    assert host.file("/var/log/mhcm.log").user == 'root'
+    assert host.file("/var/log/mhcm.log").group == 'root'
+    assert host.file("/var/log/mhcm.log").mode == 0o644
+
 
 def test_CCURmhfrm_service_exists(host):
     service = host.service("CCURmhfrm")
