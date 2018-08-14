@@ -22,10 +22,15 @@ def test_CCURhttpSession_service_exists(host):
     assert service.is_enabled
     assert service.is_running
 
-def test_CCURlighttpd_service_exists(host):
+def test_CCURlighttpd_service_exists(host, Process, Socket):
     service = host.service("CCURlighttpd")
     assert service.is_enabled
     assert service.is_running
+    lighttpd = Process.filter(comm="lighttpd")
+    assert Socket("tcp://0.0.0.0:80").is_listening
+    assert host.file("/opt/MediaHawk/lib64/lighttpd").is_directory
+
+
 
 def test_CCURmhcm_service_exists(host):
     service = host.service("CCURmhcm")
@@ -64,6 +69,7 @@ def test_CCURmhue_service_exists(host, Process):
     mhuemon = Process.get(comm="mhuemon")
     assert mhuemon.user == "root"
     assert mhuemon.group == "root"
+
 
 def test_CCURmhvp_service_exists(host):
     service = host.service("CCURmhvp")
