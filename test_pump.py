@@ -155,7 +155,7 @@ def test_CCURtimemon_service_exists(host, Process, Socket):
     assert host.file("/var/log/timemon.log").group == 'root'
 
 # http session management daemon
-def test_httpsmd_running(Process, Service, Socket, Command):
+def test_httpsmd_running(host, Process, Service, Socket, Command):
     httpsmd = Process.get(ppid='1',comm="httpsmd")
     assert httpsmd.user == "root"
     assert httpsmd.group == "root"
@@ -164,6 +164,9 @@ def test_httpsmd_running(Process, Service, Socket, Command):
     assert httpsmd.user == "root"
     assert httpsmd.group == "root"
     assert Socket("tcp://0.0.0.0:8078").is_listening
+    assert host.file("/var/log/httpsm.log").is_file
+    assert host.file("/var/log/httpsm.log").user == 'root'
+    assert host.file("/var/log/httpsm.log").group == 'root'
 
 def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     gssproxy = Process.get(ppid='1', comm="gssproxy")
