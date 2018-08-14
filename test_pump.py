@@ -29,6 +29,7 @@ def test_CCURlighttpd_service_exists(host, Process, Socket):
     lighttpd = Process.filter(comm="lighttpd")
     assert Socket("tcp://0.0.0.0:80").is_listening
     assert host.file("/opt/MediaHawk/lib64/lighttpd").is_directory
+    assert host.file("/opt/MediaHawk/lib64/lighttpd").user == 'root'
 
 
 
@@ -69,6 +70,9 @@ def test_CCURmhue_service_exists(host, Process):
     mhuemon = Process.get(comm="mhuemon")
     assert mhuemon.user == "root"
     assert mhuemon.group == "root"
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").is_file
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").user == 'root'
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").group == 'root'
 
 
 def test_CCURmhvp_service_exists(host):
