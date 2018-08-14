@@ -58,9 +58,7 @@ def test_CCURmhgs_service_exists(host, Process, Socket):
     mhgs = Process.filter(comm="mhgs")
     assert Socket("tcp://0.0.0.0:554").is_listening
     assert Socket("tcp://0.0.0.0:8046").is_listening
-    assert Socket("tcp://0.0.0.0:20174").is_listening
     assert Socket("tcp://0.0.0.0:8081").is_listening
-    assert Socket("tcp://0.0.0.0:30674").is_listening
     assert Socket("tcp://0.0.0.0:8031").is_listening
     assert Socket("tcp://0.0.0.0:19743").is_listening
     assert Socket("tcp://0.0.0.0:8001").is_listening
