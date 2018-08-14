@@ -51,10 +51,30 @@ def test_CCURmhfrm_service_exists(host):
     assert service.is_enabled
     assert service.is_running
 
-def test_CCURmhgs_service_exists(host):
+def test_CCURmhgs_service_exists(host, Process, Socket):
     service = host.service("CCURmhgs")
     assert service.is_enabled
     assert service.is_running
+    mhgs = Process.filter(comm="mhgs")
+    assert Socket("tcp://0.0.0.0:554").is_listening
+    assert Socket("tcp://0.0.0.0:8046").is_listening
+    assert Socket("tcp://0.0.0.0:20174").is_listening
+    assert Socket("tcp://0.0.0.0:8081").is_listening
+    assert Socket("tcp://0.0.0.0:30674").is_listening
+    assert Socket("tcp://0.0.0.0:8031").is_listening
+    assert Socket("tcp://0.0.0.0:19743").is_listening
+    assert Socket("tcp://0.0.0.0:8001").is_listening
+    assert Socket("tcp://0.0.0.0:8002").is_listening
+    assert Socket("tcp://0.0.0.0:8041").is_listening
+    assert Socket("tcp://:::554").is_listening
+    assert Socket("tcp://:::8081").is_listening
+    assert Socket("tcp://:::8031").is_listening
+    assert Socket("tcp://:::8041").is_listening
+    assert host.file("/var/log/mhgs.log").is_file
+    assert host.file("/var/log/mhgs.log").user == 'root'
+    assert host.file("/var/log/mhgs.log").group == 'root'
+
+
 
 def test_CCURmhrtc_service_exists(host):
     service = host.service("CCURmhrtc")
