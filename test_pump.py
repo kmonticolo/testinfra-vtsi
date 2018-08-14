@@ -150,6 +150,9 @@ def test_CCURtimemon_service_exists(host, Process, Socket):
     assert timemon.user == "root"
     assert timemon.group == "root"
     assert Socket("tcp://0.0.0.0:8099").is_listening
+    assert host.file("/var/log/timemon.log").is_file
+    assert host.file("/var/log/timemon.log").user == 'root'
+    assert host.file("/var/log/timemon.log").group == 'root'
 
 # http session management daemon
 def test_httpsmd_running(Process, Service, Socket, Command):
