@@ -115,6 +115,9 @@ def test_CCURmhue_service_exists(host, Process):
     assert host.file("/etc/opt/MediaHawk/mhue.conf").is_file
     assert host.file("/etc/opt/MediaHawk/mhue.conf").user == 'root'
     assert host.file("/etc/opt/MediaHawk/mhue.conf").group == 'root'
+    assert host.file("/var/log/mhuemon.log").is_file
+    assert host.file("/var/log/mhuemon.log").user == 'root'
+    assert host.file("/var/log/mhuemon.log").group == 'root'
 
 def test_CCURmhvp_service_exists(host, Process, Socket):
     service = host.service("CCURmhvp")
