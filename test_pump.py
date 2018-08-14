@@ -91,6 +91,7 @@ def test_CCURtimemon_service_exists(host, Process, Socket):
     assert timemon.group == "root"
     assert Socket("tcp://0.0.0.0:8099").is_listening
 
+# http session management daemon
 def test_httpsmd_running(Process, Service, Socket, Command):
     httpsmd = Process.get(comm="httpsmd")
     assert httpsmd.user == "root"
@@ -100,7 +101,6 @@ def test_httpsmd_running(Process, Service, Socket, Command):
     assert httpsmd.user == "root"
     assert httpsmd.group == "root"
     assert Socket("tcp://0.0.0.0:8078").is_listening
-    #command = Command('/opt/MediaHawk/sbin/redis-cli ping')
 
 def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     gssproxy = Process.get(ppid='1', comm="gssproxy")
