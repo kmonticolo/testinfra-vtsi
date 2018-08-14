@@ -109,7 +109,7 @@ def test_CCURmhue_service_exists(host, Process):
     service = host.service("CCURmhue")
     assert service.is_enabled
     assert service.is_running
-    mhuemon = Process.get(comm="mhuemon")
+    mhuemon = Process.get(ppid='1',comm="mhuemon")
     assert mhuemon.user == "root"
     assert mhuemon.group == "root"
     assert host.file("/etc/opt/MediaHawk/mhue.conf").is_file
@@ -129,7 +129,6 @@ def test_CCURmhvp_service_exists(host, Process, Socket):
     assert host.file("/var/log/mhvp.log").is_file
     assert host.file("/var/log/mhvp.log").user == 'root'
     assert host.file("/var/log/mhvp.log").group == 'root'
-
 
 def test_CCURredis_service_exists(host, Process, Socket, Command):
     service = host.service("CCURredis")
@@ -154,7 +153,7 @@ def test_CCURtimemon_service_exists(host, Process, Socket):
 
 # http session management daemon
 def test_httpsmd_running(Process, Service, Socket, Command):
-    httpsmd = Process.get(comm="httpsmd")
+    httpsmd = Process.get(ppid='1',comm="httpsmd")
     assert httpsmd.user == "root"
     assert httpsmd.group == "root"
     assert Socket("tcp://0.0.0.0:8078").is_listening
