@@ -109,11 +109,17 @@ def test_CCURmhue_service_exists(host, Process):
     assert host.file("/etc/opt/MediaHawk/mhue.conf").user == 'root'
     assert host.file("/etc/opt/MediaHawk/mhue.conf").group == 'root'
 
-
-def test_CCURmhvp_service_exists(host):
+def test_CCURmhvp_service_exists(host, Process, Socket):
     service = host.service("CCURmhvp")
     assert service.is_enabled
     assert service.is_running
+    mhvp = Process.filter(comm="mhvp")
+    assert Socket("tcp://0.0.0.0:8012").is_listening
+    assert Socket("tcp://0.0.0.0:8025").is_listening
+    assert host.file("/var/log/mhvp.log").is_file
+    assert host.file("/var/log/mhvp.log").user == 'root'
+    assert host.file("/var/log/mhvp.log").group == 'root'
+
 
 def test_CCURredis_service_exists(host, Process, Socket, Command):
     service = host.service("CCURredis")
