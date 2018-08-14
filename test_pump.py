@@ -30,7 +30,7 @@ def test_CCURlighttpd_service_exists(host, Process, Socket):
     assert Socket("tcp://0.0.0.0:80").is_listening
     assert host.file("/opt/MediaHawk/lib64/lighttpd").is_directory
     assert host.file("/opt/MediaHawk/lib64/lighttpd").user == 'root'
-
+    assert host.file("/opt/MediaHawk/lib64/lighttpd").group == 'root'
 
 
 def test_CCURmhcm_service_exists(host):
