@@ -185,7 +185,9 @@ def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     assert file.user == "root"
     assert file.group == "root"
     assert file.mode == 0o600
-    
+    assert host.file("/etc/gssproxy/gssproxy.conf").is_file
+    assert host.file("/etc/gssproxy/gssproxy.conf").user == 'root'
+    assert host.file("/etc/gssproxy/gssproxy.conf").group == 'root'
 
 
 
