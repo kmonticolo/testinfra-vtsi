@@ -70,11 +70,9 @@ def test_CCURmhgs_service_exists(host, Process, Socket):
     assert Socket("tcp://:::8081").is_listening
     assert Socket("tcp://:::8031").is_listening
     assert Socket("tcp://:::8041").is_listening
-    assert host.file("/var/log/mhcm.log").is_file
-    assert host.file("/var/log/mhcm.log").user == 'root'
-    assert host.file("/var/log/mhcm.log").group == 'root'
-
-
+    assert host.file("/var/log/mhgs.log").is_file
+    assert host.file("/var/log/mhgs.log").user == 'root'
+    assert host.file("/var/log/mhgs.log").group == 'root'
 
 def test_CCURmhrtc_service_exists(host):
     service = host.service("CCURmhrtc")
