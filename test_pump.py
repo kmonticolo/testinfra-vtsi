@@ -79,10 +79,19 @@ def test_CCURmhrtc_service_exists(host):
     assert service.is_enabled
     assert service.is_running
 
-def test_CCURmhsp_service_exists(host):
+def test_CCURmhsp_service_exists(host, Process, Socket):
     service = host.service("CCURmhsp")
     assert service.is_enabled
     assert service.is_running
+    mhsp = Process.filter(comm="mhsp")
+    assert Socket("tcp://0.0.0.0:8011").is_listening
+    assert Socket("tcp://0.0.0.0:555").is_listening
+    assert Socket("tcp://0.0.0.0:8075").is_listening
+    assert Socket("tcp://0.0.0.0:9001").is_listening
+    assert Socket("tcp://:::555").is_listening
+    assert host.file("/var/log/mhsp.log").is_file
+    assert host.file("/var/log/mhsp.log").user == 'root'
+    assert host.file("/var/log/mhsp.log").group == 'root'
 
 def test_CCURmhstore_service_exists(host):
     service = host.service("CCURmhstore")
