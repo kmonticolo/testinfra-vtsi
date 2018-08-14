@@ -57,25 +57,50 @@ def test_CCURmhstore_service_exists(host):
     assert service.is_enabled
     #assert service.is_running
 
-def test_CCURmhue_service_exists(host):
+def test_CCURmhue_service_exists(host, Process):
     service = host.service("CCURmhue")
     assert service.is_enabled
     assert service.is_running
+    mhuemon = Process.get(comm="mhuemon")
+    assert mhuemon.user == "root"
+    assert mhuemon.group == "root"
 
 def test_CCURmhvp_service_exists(host):
     service = host.service("CCURmhvp")
     assert service.is_enabled
     assert service.is_running
 
-def test_CCURredis_service_exists(host):
+def test_CCURredis_service_exists(host, Process, Socket, Command):
     service = host.service("CCURredis")
     assert service.is_enabled
     assert service.is_running
+    redis = Process.get(ppid='1', comm="redis-server")
+    assert redis.user == "root"
+    assert redis.group == "root"
+    assert Socket("tcp://0.0.0.0:6379").is_listening
+    command = Command('/opt/MediaHawk/sbin/redis-cli ping')
+    assert command.stdout.rstrip() == 'PONG'
+    assert command.rc == 0
 
-def test_CCURtimemon_service_exists(host):
+def test_CCURtimemon_service_exists(host, Process, Socket):
     service = host.service("CCURtimemon")
     assert service.is_enabled
     assert service.is_running
+    timemon = Process.get(ppid='1', comm="timemon")
+    assert timemon.user == "root"
+    assert timemon.group == "root"
+    assert Socket("tcp://0.0.0.0:8099").is_listening
+
+def test_httpsmd_running(Process, Service, Socket, Command):
+    httpsmd = Process.get(comm="httpsmd")
+    assert httpsmd.user == "root"
+    assert httpsmd.group == "root"
+    assert Socket("tcp://0.0.0.0:8078").is_listening
+    redis = Process.get(ppid='1', comm="redis-server")
+    assert redis.user == "root"
+    assert redis.group == "root"
+    assert Socket("tcp://0.0.0.0:6379").is_listening
+    command = Command('/opt/MediaHawk/sbin/redis-cli ping')
 
 def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     gssproxy = Process.get(ppid='1', comm="gssproxy")
@@ -94,6 +119,7 @@ def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     assert file.user == "root"
     assert file.group == "root"
     assert file.mode == 0o600
+    
 
 
 
