@@ -96,11 +96,11 @@ def test_httpsmd_running(Process, Service, Socket, Command):
     assert httpsmd.user == "root"
     assert httpsmd.group == "root"
     assert Socket("tcp://0.0.0.0:8078").is_listening
-    redis = Process.get(ppid='1', comm="redis-server")
-    assert redis.user == "root"
-    assert redis.group == "root"
-    assert Socket("tcp://0.0.0.0:6379").is_listening
-    command = Command('/opt/MediaHawk/sbin/redis-cli ping')
+    httpsmd = Process.get(ppid='1', comm="httpsmd")
+    assert httpsmd.user == "root"
+    assert httpsmd.group == "root"
+    assert Socket("tcp://0.0.0.0:8078").is_listening
+    #command = Command('/opt/MediaHawk/sbin/redis-cli ping')
 
 def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     gssproxy = Process.get(ppid='1', comm="gssproxy")
