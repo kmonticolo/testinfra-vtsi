@@ -5,7 +5,7 @@ def test_ntp_conf(File):
     assert ntp_conf.mode == 0o644
     assert ntp_conf.contains("server 192.168.160.158")
 
-def test_NTP_ntpstat(Command):
+def test_NTP_time_accuracy(Command):
     command = Command('ntpstat')
     assert command.rc == 0
 
@@ -142,6 +142,9 @@ def test_CCURredis_service_exists(host, Process, Socket, Command):
     assert redis.user == "root"
     assert redis.group == "root"
     assert Socket("tcp://0.0.0.0:6379").is_listening
+    assert host.file("/etc/opt/MediaHawk/redis.conf").is_file
+    assert host.file("/etc/opt/MediaHawk/redis.conf").user == 'root'
+    assert host.file("/etc/opt/MediaHawk/redis.conf").group == 'root'
     command = Command('/opt/MediaHawk/sbin/redis-cli ping')
     assert command.stdout.rstrip() == 'PONG'
     assert command.rc == 0
