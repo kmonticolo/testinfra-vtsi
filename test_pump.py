@@ -22,7 +22,7 @@ def test_CCURhttpSession_service_exists(host):
     assert service.is_enabled
     assert service.is_running
 
-def test_CCURlighttpd_service_exists(host, Process, Socket):
+def test_CCURlighttpd_service_exists(host, Process, Socket, Command):
     service = host.service("CCURlighttpd")
     assert service.is_enabled
     assert service.is_running
@@ -31,7 +31,9 @@ def test_CCURlighttpd_service_exists(host, Process, Socket):
     assert host.file("/opt/MediaHawk/lib64/lighttpd").is_directory
     assert host.file("/opt/MediaHawk/lib64/lighttpd").user == 'root'
     assert host.file("/opt/MediaHawk/lib64/lighttpd").group == 'root'
-
+    command = Command('echo "GET /index.html" | nc 0.0.0.0 80 | grep lighttpd')
+    assert command.stdout.rstrip() == 'Server: MediaHawk mhue lighttpd'
+    assert command.rc == 0
 
 def test_CCURmhcm_service_exists(host, Process, Socket):
     service = host.service("CCURmhcm")
