@@ -54,6 +54,10 @@ def test_docker_service_exists(host, Process, Socket, Command):
     service = host.service("docker")
     assert service.is_enabled
     assert service.is_running
+    command = Command('docker ps -f NAME=origin-mariadb|grep mariadb')
+    assert command.rc == 0
+    assert Socket("tcp://172.0.0.1:3306").is_listening
+
 
 def test_CCURorigindb_service_exists(host, Process, Socket, Command):
     service = host.service("CCURorigindb")
