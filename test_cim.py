@@ -18,9 +18,9 @@ def test_ntpd_service_exists(host):
     service = host.service("ntpd")
     assert service.is_enabled
 
-def test_chronyd_service_exists(host):
-    service = host.service("chronyd")
-    assert service.is_enabled
+#def test_chronyd_service_exists(host):
+#    service = host.service("chronyd")
+#    assert service.is_enabled
 
 def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     gssproxy = Process.get(ppid='1', comm="gssproxy")
@@ -148,7 +148,7 @@ def test_serv(host):
 "CCURcim",
 "CCURorigindb",
 "CCURtomcat",
-"chronyd",
+#"chronyd",
 "crond",
 "dbus-org.freedesktop.Avahi",
 "dmraid-activation",
