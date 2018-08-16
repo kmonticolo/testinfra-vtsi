@@ -102,7 +102,9 @@ def test_CCURmhsp_service_exists(host, Process, Socket):
     service = host.service("CCURmhsp")
     assert service.is_enabled
     assert service.is_running
-    mhsp = Process.filter(comm="mhsp")
+    mhsp = Process.get(comm="mhsp")
+    assert mhsp.user == "root"
+    assert mhsp.group == "root"
     assert Socket("tcp://0.0.0.0:8011").is_listening
     assert Socket("tcp://0.0.0.0:555").is_listening
     assert Socket("tcp://0.0.0.0:8075").is_listening
