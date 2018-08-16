@@ -163,12 +163,39 @@ def test_CCURmhue_service_exists(host, Process):
     mhuemon = Process.get(ppid='1',comm="mhuemon")
     assert mhuemon.user == "root"
     assert mhuemon.group == "root"
-    assert host.file("/etc/opt/MediaHawk/mhue.conf").is_file
-    assert host.file("/etc/opt/MediaHawk/mhue.conf").user == 'root'
-    assert host.file("/etc/opt/MediaHawk/mhue.conf").group == 'root'
     assert host.file("/var/log/mhuemon.log").is_file
     assert host.file("/var/log/mhuemon.log").user == 'root'
     assert host.file("/var/log/mhuemon.log").group == 'root'
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").is_file
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").user == 'root'
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").group == 'root'
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.document-root        = "/var/lib/MediaHawk/Edge/webroot/"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.errorlog             = "/var/log/mhue_error.log"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.core-files           = "enable"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.tag                 = "MediaHawk mhue lighttpd"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.network-backend = "linux-mediahawk-aio"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.use-noatime = "enable"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.max-read-threads = 16')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.max-stat-threads =  32')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.max-worker = 8')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.max-keep-alive-requests = 16')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.max-keep-alive-idle = 20')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.max-read-idle = 60')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.max-write-idle = 60')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.max-fds = 64511')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server_info.status-url     = "/server-status"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server_info.config-url     = "/server-config"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.stat-cache-engine = "fam"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.mediahawk             = "enable"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.pid-file            = "/var/run/mhue.pid"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('cachemanager.mhstore = "enable"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('proxy-core.use-mhstore = "enable"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('mhstore_cache.bases = ("/var/lib/MediaHawk/Edge/webroot/cache")')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('mhstore_cache.enable = "enable"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('mhstore_cache.backend = "enable"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('mhstore_cache.dynamic-mode = "enable"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('mhstore_cache.debug = "disable"')
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('mhstore_cache.max-memory-size = 2000')
 
 def test_CCURmhvp_service_exists(host, Process, Socket):
     service = host.service("CCURmhvp")
