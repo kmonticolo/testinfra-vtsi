@@ -15,6 +15,11 @@ def test_ntpd_service_exists(host):
     assert service.is_running
     assert service.is_enabled
 
+def test_timezone_check(Command):
+    command = Command('timedatectl |grep zone')
+    assert command.stdout.rstrip() == '       Time zone: Europe/Warsaw (CEST, +0200)'
+    assert command.rc == 0
+
 def test_vtsi_service_exists(host):
     service = host.service("vtsi")
     assert service.is_enabled

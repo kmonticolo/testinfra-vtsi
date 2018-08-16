@@ -9,6 +9,11 @@ def test_NTP_time_accuracy(Command):
     command = Command('ntpstat')
     assert command.rc == 0
 
+def test_timezone_check(Command):
+    command = Command('timedatectl |grep zone')
+    assert command.stdout.rstrip() == '       Time zone: Europe/Warsaw (CEST, +0200)'
+    assert command.rc == 0
+
 def test_ntpd_service_exists(host):
     service = host.service("ntpd")
     assert service.is_enabled
