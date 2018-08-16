@@ -54,9 +54,6 @@ def test_docker_service_exists(host, Process, Socket, Command):
     service = host.service("docker")
     assert service.is_enabled
     assert service.is_running
-    command = Command('docker ps -f NAME=origin-mariadb|grep mariadb')
-    assert command.rc == 0
-    assert Socket("tcp://172.0.0.1:3306").is_listening
 
 def test_tomcat_service_exists(host, Process, Socket, Command):
     service = host.service("CCURtomcat")
@@ -78,6 +75,9 @@ def test_CCURorigindb_service_exists(host, Process, Socket, Command):
     dockerchild = Process.get(ppid=docker.pid, comm="docker-compose")
     assert dockerchild.user == "root"
     assert dockerchild.group == "root"
+    command = Command('docker ps -f NAME=origin-mariadb|grep mariadb')
+    assert command.rc == 0
+    assert Socket("tcp://172.0.0.1:3306").is_listening
     
     #assert Socket("tcp://0.0.0.0:8081").is_listening
     assert host.file("/etc/opt/CCURorigin/origindb-compose.yml").is_file
