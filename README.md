@@ -14,7 +14,7 @@ for PUMP: `$ py.test test_pump.py --ssh-config=/home/kamil/.ssh/config --hosts r
 
 for VTSI: `$ py.test test_pump.py --ssh-config=/home/kamil/.ssh/config --hosts root@10.48.77.31 -v`
 
-where /home/kamil/.ssh/config is configuration which allows you to connect to IS60 site
+where /home/kamil/.ssh/config is configuration which allows you to connect to vtsi site
 
 content of .ssh/config:
 `User seachange
