@@ -58,6 +58,15 @@ def test_docker_service_exists(host, Process, Socket, Command):
     assert command.rc == 0
     assert Socket("tcp://172.0.0.1:3306").is_listening
 
+def test_tomcat_service_exists(host, Process, Socket, Command):
+    service = host.service("CCURtomcat")
+    assert service.is_enabled
+    assert service.is_running
+    tomcat = Process.get(comm="java")
+    assert tomcat.user == "ccur"
+    assert tomcat.group == "ccur"
+    assert Socket("tcp://:::8080").is_listening
+    assert Socket("tcp://:::8009").is_listening
 
 def test_CCURorigindb_service_exists(host, Process, Socket, Command):
     service = host.service("CCURorigindb")
