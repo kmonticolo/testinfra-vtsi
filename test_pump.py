@@ -44,6 +44,10 @@ def test_CCURmhcm_service_exists(host, Process, Socket):
     assert host.file("/var/log/mhcm.log").user == 'root'
     assert host.file("/var/log/mhcm.log").group == 'root'
     assert host.file("/var/log/mhcm.log").mode == 0o644
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").is_file
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").user == 'root'
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").group == 'root'
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").mode == 0o644
 
 
 def test_CCURmhfrm_service_exists(host):
@@ -188,7 +192,6 @@ def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     assert host.file("/etc/gssproxy/gssproxy.conf").is_file
     assert host.file("/etc/gssproxy/gssproxy.conf").user == 'root'
     assert host.file("/etc/gssproxy/gssproxy.conf").group == 'root'
-
 
 
 
