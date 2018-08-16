@@ -179,10 +179,6 @@ def test_httpsmd_running(host, Process, Service, Socket, Command):
     assert httpsmd.user == "root"
     assert httpsmd.group == "root"
     assert Socket("tcp://0.0.0.0:8078").is_listening
-    httpsmd = Process.get(ppid='1', comm="httpsmd")
-    assert httpsmd.user == "root"
-    assert httpsmd.group == "root"
-    assert Socket("tcp://0.0.0.0:8078").is_listening
     assert host.file("/var/log/httpsm.log").is_file
     assert host.file("/var/log/httpsm.log").user == 'root'
     assert host.file("/var/log/httpsm.log").group == 'root'
