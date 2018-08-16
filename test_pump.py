@@ -61,7 +61,9 @@ def test_CCURmhgs_service_exists(host, Process, Socket):
     service = host.service("CCURmhgs")
     assert service.is_enabled
     assert service.is_running
-    mhgs = Process.filter(comm="mhgs")
+    mhgs = Process.get(comm="mhgs")
+    assert mhgs.user == "root"
+    assert mhgs.group == "root"
     assert Socket("tcp://0.0.0.0:554").is_listening
     assert Socket("tcp://0.0.0.0:8046").is_listening
     assert Socket("tcp://0.0.0.0:8081").is_listening
