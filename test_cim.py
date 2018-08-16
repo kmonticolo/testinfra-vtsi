@@ -54,6 +54,48 @@ def test_CCURcim_service_exists(host, Process, Socket, Command):
     assert host.file("/etc/opt/MediaHawk/cim.cfg").is_file
     assert host.file("/etc/opt/MediaHawk/cim.cfg").user == 'root'
     assert host.file("/etc/opt/MediaHawk/cim.cfg").group == 'root'
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Log File Directory:  /var/log")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Library Interface:  MHMP")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Library Address: 10.48.77.30")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Library Volume Name Type: DiskSet")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Library Default Volume: MediaHawk")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("SNMP Trap Peername:   127.0.0.1:162")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("SNMP Traps Enabled:   false")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Package Poll Frequency:  15")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Package Retries:  10")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Package Retry Delay:  3600")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Package Search Level:  2")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Content Retention Period:  2592000")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Content Purge Frequency:  3600")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Content Index Type:  ContentFilename")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("BMS Interface Enabled: false")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("BMS Success Required: ALL")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Origin Success Required: ALL")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Rollback On Failure: No")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Web Service Port: 8081")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Eventis Delete Interval:  86400")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Web Service Status Interval:  300")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Content Byte Per Second: 1048576")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Content Average Seconds: 7200")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("eFO Pp Reload Seconds: 60")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("CIM Virtual IP: 10.48.77.29")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Package Data Retention Period:  2592000")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Enable Rule Based Provision: true")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Retain Transformed ADI File: false")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Skip Content Ingest: false")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Skip ADI Transform: false")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Support ABR Within ADI: false")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Allow Content AssetId Reuse: false")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Support Byte Rate: false")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Snmp Resource Polling Enabled: true")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Eventis Content Size Supported: true")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Content Size Collection Limit: 100")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Rolling Buffer Duration Minutes: 10080")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Rolling Buffer File Duration Minutes: 5")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Rename smil File: false")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Support Ingested Content Uri: false")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("TvVod Restart Delay Seconds: 60")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("ABR Restart Delay Seconds: 60")
     assert host.file("/var/log/cim.log").is_file
     assert host.file("/var/log/cim.log").user == 'root'
     assert host.file("/var/log/cim.log").group == 'root'
@@ -150,3 +192,4 @@ def test_listening_socket(host):
     ):
         socket = host.socket(spec)
         assert socket.is_listening
+
