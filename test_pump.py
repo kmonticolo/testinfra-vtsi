@@ -86,7 +86,9 @@ def test_CCURmhrtc_service_exists(host, Process, Socket):
     service = host.service("CCURmhrtc")
     assert service.is_enabled
     assert service.is_running
-    mhrtc = Process.filter(comm="mhrtc")
+    mhrtc = Process.get(comm="mhrtc")
+    assert mhrtc.user == "root"
+    assert mhrtc.group == "root"
     assert Socket("tcp://127.0.0.1:8062").is_listening
     assert Socket("tcp://0.0.0.0:8037").is_listening
     assert Socket("tcp://0.0.0.0:8039").is_listening
