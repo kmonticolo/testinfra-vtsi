@@ -300,6 +300,14 @@ def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     assert host.file("/etc/gssproxy/gssproxy.conf").contains("allow_any_uid = yes")
     assert host.file("/etc/gssproxy/gssproxy.conf").contains("trusted = yes")
 
+def test_mhcmd_dr(Command):
+    command = Command('/usr/sbin/mhcmd dr -a |grep -A1 ^"Service Providers"|grep -w enable.*Y$')
+    assert command.rc == 0
+    command = Command('/usr/sbin/mhcmd dr -a |grep -A1 ^Video\ Pumps|grep -w enable.*Y$')
+    assert command.rc == 0
+    command = Command('/usr/sbin/mhcmd dr -a |grep -A1 ^Real\ Time\ Catchers|grep -w enable.*Y$')
+    assert command.rc == 0
+
 # systemctl list-unit-files | grep service.*enabled |sed 's/.service.*enabled//g' | awk '{print "\""$1"\","}'
 
 def test_serv(host):
