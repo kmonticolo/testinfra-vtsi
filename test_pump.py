@@ -39,7 +39,7 @@ def test_CCURmhcm_service_exists(host, Process, Socket):
     service = host.service("CCURmhcm")
     assert service.is_enabled
     assert service.is_running
-    mhcm = Process.filter(comm="mhcm")
+    mhcm = Process.get(comm="mhcm")
     assert Socket("tcp://0.0.0.0:8040").is_listening
     assert Socket("tcp://0.0.0.0:8072").is_listening
     assert host.file("/var/log/mhcm.log").is_file
