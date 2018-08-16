@@ -187,6 +187,21 @@ def test_httpsmd_running(host, Process, Service, Socket, Command):
     assert host.file("/var/log/httpsm.log").is_file
     assert host.file("/var/log/httpsm.log").user == 'root'
     assert host.file("/var/log/httpsm.log").group == 'root'
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("SM-ServicePort = 8078")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("SM-SchedulingPriority = 20")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("SM-RPCThreadCount = 256")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("Session-BackOffice = NOS")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("Session-AuthorityURL =")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("Session-MaxLifeTime = 30")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("HTTP-ProxyRedirector =")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("HTTP-MaxActiveRequests = 256")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("HTTP-MaxQueuedRequests = 512")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("FRM-Register = true")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("FRM-Port = 8020")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("Log-Level = 20")
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("Log-FilePath = /var/log/httpsm.log")
+
+
 
 def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     gssproxy = Process.get(ppid='1', comm="gssproxy")
