@@ -217,13 +217,79 @@ def test_CCURredis_service_exists(host, Process, Socket, Command):
     redis = Process.get(ppid='1', comm="redis-server")
     assert redis.user == "root"
     assert redis.group == "root"
+    command = Command('/opt/MediaHawk/sbin/redis-cli ping')
+    assert command.stdout.rstrip() == 'PONG'
+    assert command.rc == 0
     assert Socket("tcp://0.0.0.0:6379").is_listening
     assert host.file("/etc/opt/MediaHawk/redis.conf").is_file
     assert host.file("/etc/opt/MediaHawk/redis.conf").user == 'root'
     assert host.file("/etc/opt/MediaHawk/redis.conf").group == 'root'
-    command = Command('/opt/MediaHawk/sbin/redis-cli ping')
-    assert command.stdout.rstrip() == 'PONG'
-    assert command.rc == 0
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('daemonize no')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('pidfile "/var/run/redis.pid"')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('port 6379')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('tcp-backlog 511')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('timeout 0')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('tcp-keepalive 0')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('loglevel notice')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('logfile "/var/log/redis.log"')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('databases 16')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('stop-writes-on-bgsave-error yes')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('rdbcompression yes')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('rdbchecksum yes')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('dbfilename "redis.rdb"')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('dir "/var/lib/MediaHawk/Edge"')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('slave-serve-stale-data yes')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('slave-read-only yes')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('repl-diskless-sync no')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('repl-diskless-sync-delay 5')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('repl-disable-tcp-nodelay no')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('slave-priority 100')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('appendonly yes')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('appendfilename "redis_appendonly.aof"')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('appendfsync no')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('no-appendfsync-on-rewrite no')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('auto-aof-rewrite-percentage 100')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('auto-aof-rewrite-min-size 2gb')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('aof-load-truncated yes')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('lua-time-limit 5000')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('slowlog-log-slower-than 10000')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('slowlog-max-len 128')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('latency-monitor-threshold 0')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('notify-keyspace-events ""')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('hash-max-ziplist-entries 512')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('hash-max-ziplist-value 64')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('list-max-ziplist-entries 512')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('hash-max-ziplist-value 64')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('list-max-ziplist-entries 512')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('list-max-ziplist-value 64')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('set-max-intset-entries 512')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('zset-max-ziplist-entries 128')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('zset-max-ziplist-value 64')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('hll-sparse-max-bytes 3000')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('activerehashing yes')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('client-output-buffer-limit normal 0 0 0')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('client-output-buffer-limit slave 256mb 64mb 60')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('client-output-buffer-limit pubsub 32mb 8mb 60')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('hz 10')
+    assert host.file("/etc/opt/MediaHawk/redis.conf").contains('aof-rewrite-incremental-fsync yes')
+
+def test_CCURtimemon_service_exists(host, Process, Socket):
+    service = host.service("CCURtimemon")
+    assert service.is_enabled
+    assert service.is_running
+    timemon = Process.get(ppid='1', comm="timemon")
+    assert timemon.user == "root"
+    assert timemon.group == "root"
+    assert Socket("tcp://0.0.0.0:8099").is_listening
+
+def test_CCURtimemon_service_exists(host, Process, Socket):
+    service = host.service("CCURtimemon")
+    assert service.is_enabled
+    assert service.is_running
+    timemon = Process.get(ppid='1', comm="timemon")
+    assert timemon.user == "root"
+    assert timemon.group == "root"
+    assert Socket("tcp://0.0.0.0:8099").is_listening
 
 def test_CCURtimemon_service_exists(host, Process, Socket):
     service = host.service("CCURtimemon")
