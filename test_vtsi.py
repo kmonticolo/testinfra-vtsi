@@ -98,4 +98,3 @@ def test_serv(host):
     ):  
         service= host.service(spec)
         assert service.is_enabled
-

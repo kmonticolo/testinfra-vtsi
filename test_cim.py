@@ -133,3 +133,20 @@ def test_serv(host):
     ):  
         service= host.service(spec)
         assert service.is_enabled
+
+def test_listening_socket(host):
+    listening = host.socket.get_listening_sockets()
+    for spec in (
+"tcp://0.0.0.0:111",
+"tcp://0.0.0.0:8081",
+"tcp://0.0.0.0:22",
+"tcp://127.0.0.1:25",
+"tcp://:::3306",
+"tcp://:::111",
+"tcp://:::8080",
+"tcp://:::22",
+"tcp://::1:25",
+"tcp://:::8009",
+    ):
+        socket = host.socket(spec)
+        assert socket.is_listening
