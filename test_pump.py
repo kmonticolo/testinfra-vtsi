@@ -187,6 +187,9 @@ def test_httpsmd_running(host, Process, Service, Socket, Command):
     assert host.file("/var/log/httpsm.log").is_file
     assert host.file("/var/log/httpsm.log").user == 'root'
     assert host.file("/var/log/httpsm.log").group == 'root'
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").is_file
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").user == 'root'
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").group == 'root'
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("SM-ServicePort = 8078")
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("SM-SchedulingPriority = 20")
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("SM-RPCThreadCount = 256")
