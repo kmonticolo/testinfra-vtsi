@@ -138,6 +138,8 @@ def test_CCURmhvp_service_exists(host, Process, Socket):
     assert service.is_enabled
     assert service.is_running
     mhvp = Process.get(ppid='1',comm="mhvp")
+    assert mhvp.user == "root"
+    assert mhvp.group == "root"
     assert Socket("tcp://0.0.0.0:8012").is_listening
     assert Socket("tcp://0.0.0.0:8025").is_listening
     assert host.file("/var/log/mhvp.log").is_file
