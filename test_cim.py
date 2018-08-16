@@ -49,6 +49,9 @@ def test_CCURcim_service_exists(host, Process, Socket, Command):
     assert host.file("/etc/opt/MediaHawk/cim.cfg").is_file
     assert host.file("/etc/opt/MediaHawk/cim.cfg").user == 'root'
     assert host.file("/etc/opt/MediaHawk/cim.cfg").group == 'root'
+    assert host.file("/var/log/cim.log").is_file
+    assert host.file("/var/log/cim.log").user == 'root'
+    assert host.file("/var/log/cim.log").group == 'root'
 
 def test_docker_service_exists(host, Process, Socket, Command):
     service = host.service("docker")
