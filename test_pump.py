@@ -53,10 +53,10 @@ def test_CCURmhcm_service_exists(host, Process, Socket):
     assert host.file("/var/log/mhcm.log").user == 'root'
     assert host.file("/var/log/mhcm.log").group == 'root'
     assert host.file("/var/log/mhcm.log").mode == 0o644
-    assert host.file("/etc/opt/MediaHawk/mhue.conf").is_file
-    assert host.file("/etc/opt/MediaHawk/mhue.conf").user == 'root'
-    assert host.file("/etc/opt/MediaHawk/mhue.conf").group == 'root'
-    assert host.file("/etc/opt/MediaHawk/mhue.conf").mode == 0o644
+    assert host.file("/etc/opt/MediaHawk/mhcm.cfg").is_file
+    assert host.file("/etc/opt/MediaHawk/mhcm.cfg").user == 'root'
+    assert host.file("/etc/opt/MediaHawk/mhcm.cfg").group == 'root'
+    assert host.file("/etc/opt/MediaHawk/mhcm.cfg").mode == 0o644
 
 
 def test_CCURmhfrm_service_exists(host):
@@ -240,8 +240,6 @@ def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_usage = initiate")
     assert host.file("/etc/gssproxy/gssproxy.conf").contains("allow_any_uid = yes")
     assert host.file("/etc/gssproxy/gssproxy.conf").contains("trusted = yes")
-
-
 
 # systemctl list-unit-files | grep service.*enabled |sed 's/.service.*enabled//g' | awk '{print "\""$1"\","}'
 
