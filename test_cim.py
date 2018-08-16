@@ -50,6 +50,11 @@ def test_CCURcim_service_exists(host, Process, Socket, Command):
     assert host.file("/etc/opt/MediaHawk/cim.cfg").user == 'root'
     assert host.file("/etc/opt/MediaHawk/cim.cfg").group == 'root'
 
+def test_docker_service_exists(host, Process, Socket, Command):
+    service = host.service("docker")
+    assert service.is_enabled
+    assert service.is_running
+
 def test_CCURorigindb_service_exists(host, Process, Socket, Command):
     service = host.service("CCURorigindb")
     assert service.is_enabled
