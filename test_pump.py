@@ -312,6 +312,20 @@ def test_resource_cfg(host):
 def test_disk_r1_mounted(Command):
     command = Command('/bin/mount |grep "^/dev/.*/r1"')
     assert command.rc == 0
+
+def test_CCURVod_config(host):
+    assert host.file("/etc/sysconfig/CCURvod").is_file
+    assert host.file("/etc/sysconfig/CCURvod").user == 'root'
+    assert host.file("/etc/sysconfig/CCURvod").group == 'root'
+    assert host.file("/etc/sysconfig/CCURvod").mode == 0o644
+    assert host.file("/etc/sysconfig/CCURvod").contains('FTPUPLD_OPTIONS="-ft -log /var/log/ftpupld.log -no_srv -port 5000"')
+    assert host.file("/etc/sysconfig/CCURvod").contains('MHISA_OPTIONS="-ft -log /var/log/mhisa.log" ')
+    assert host.file("/etc/sysconfig/CCURvod").contains('MHGS_OPTIONS="-ft -log /var/log/mhgs.log"')
+    assert host.file("/etc/sysconfig/CCURvod").contains('MHSP_OPTIONS="-ft -log /var/log/mhsp.log"')
+    assert host.file("/etc/sysconfig/CCURvod").contains('MHVP_OPTIONS="-ft -log /var/log/mhvp.log"')
+    assert host.file("/etc/sysconfig/CCURvod").contains('MHRTC_OPTIONS="-ft -log /var/log/mhrtc.log"')
+
+
     
 def test_CCURtimemon_service_exists(host, Process, Socket):
     service = host.service("CCURtimemon")
