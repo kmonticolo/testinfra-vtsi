@@ -274,6 +274,10 @@ def test_CCURredis_service_exists(host, Process, Socket, Command):
     assert host.file("/etc/opt/MediaHawk/redis.conf").contains('aof-rewrite-incremental-fsync yes')
 
 def test_resource_cfg(host):
+    assert host.file("/etc/opt/MediaHawk/resource.cfg").is_file
+    assert host.file("/etc/opt/MediaHawk/resource.cfg").user == 'root'
+    assert host.file("/etc/opt/MediaHawk/resource.cfg").group == 'root'
+    assert host.file("/etc/opt/MediaHawk/resource.cfg").mode == 0o644
     assert host.file("/etc/opt/MediaHawk/resource.cfg").contains("Define:.*Disk.*1s0.*/r1.*VIRTUAL_1MB.**.*64")
 
 def test_disk_r1_mounted(Command):
