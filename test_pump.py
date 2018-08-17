@@ -350,10 +350,6 @@ def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     assert file.user == "root"
     assert file.group == "root"
     assert file.mode == 0o600
-    assert host.file("/etc/gssproxy/gssproxy.conf").is_file
-    assert host.file("/etc/gssproxy/gssproxy.conf").user == 'root'
-    assert host.file("/etc/gssproxy/gssproxy.conf").group == 'root'
-    assert host.file("/etc/gssproxy/gssproxy.conf").mode == 0o644
     assert host.file("/etc/gssproxy/gssproxy.conf").contains("mechs = krb5")
     assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_store = keytab:/etc/gssproxy/http.keytab")
     assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_store = ccache:/var/lib/gssproxy/clients/krb5cc_%U")
