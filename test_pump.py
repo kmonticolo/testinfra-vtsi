@@ -310,7 +310,7 @@ def test_resource_cfg(host):
     assert host.file("/etc/opt/MediaHawk/resource.cfg").contains("Define:.*Disk.*1s0.*/r1.*VIRTUAL_1MB.**.*64")
 
 def test_disk_r1_mounted(Command):
-    command = Command('/bin/mount |grep "/r1"')
+    command = Command('/bin/mount |grep "^/dev/.*/r1"')
     assert command.rc == 0
     
 def test_CCURtimemon_service_exists(host, Process, Socket):
