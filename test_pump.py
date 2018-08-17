@@ -210,6 +210,13 @@ def test_CCURmhue_service_exists(host, Process):
     assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('mhstore_cache.dynamic-mode = "enable"')
     assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('mhstore_cache.debug = "disable"')
     assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('mhstore_cache.max-memory-size = 2000')
+    assert host.file("/etc/sysconfig/CCURmhue").is_file
+    assert host.file("/etc/sysconfig/CCURmhue").user == 'root'
+    assert host.file("/etc/sysconfig/CCURmhue").group == 'root'
+    assert host.file("/etc/sysconfig/CCURmhue").mode == 0o644
+    assert host.file("/etc/sysconfig/CCURmhue").contains('MHUEMON_OPTIONS="-log /var/log/mhuemon.log -ft"')
+    assert host.file("/etc/sysconfig/CCURmhue").contains('LIGHTTPD_OPTIONS="-f /etc/opt/MediaHawk/mhue.conf -m /opt/MediaHawk/lib64/lighttpd"')
+
 
 def test_CCURmhvp_service_exists(host, Process, Socket):
     service = host.service("CCURmhvp")
