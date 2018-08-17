@@ -103,6 +103,7 @@ def test_CCURmhfrm_service_exists(host):
     service = host.service("CCURmhfrm")
     assert service.is_enabled
     assert service.is_running
+    assert host.file("/etc/sysconfig/CCURmhfrm").contains('MHFRM_OPTIONS="-v -log /var/log/mhfrm.log"')
 
 def test_CCURmhgs_service_exists(host, Process, Socket):
     service = host.service("CCURmhgs")
