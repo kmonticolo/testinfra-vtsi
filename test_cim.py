@@ -112,6 +112,7 @@ def test_CCURcim_service_exists(host, Process, Socket, Command):
     assert host.file("/var/log/cim.log").is_file
     assert host.file("/var/log/cim.log").user == 'root'
     assert host.file("/var/log/cim.log").group == 'root'
+    assert host.file("/var/log/cim.log").mode == 0o644
     command = Command('curl -f http://localhost:8081/CIM/ws/Contents')
     assert command.rc == 0
 
