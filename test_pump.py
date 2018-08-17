@@ -300,27 +300,10 @@ def test_CCURtimemon_service_exists(host, Process, Socket):
     assert timemon.user == "root"
     assert timemon.group == "root"
     assert Socket("tcp://0.0.0.0:8099").is_listening
-
-def test_CCURtimemon_service_exists(host, Process, Socket):
-    service = host.service("CCURtimemon")
-    assert service.is_enabled
-    assert service.is_running
-    timemon = Process.get(ppid='1', comm="timemon")
-    assert timemon.user == "root"
-    assert timemon.group == "root"
-    assert Socket("tcp://0.0.0.0:8099").is_listening
-
-def test_CCURtimemon_service_exists(host, Process, Socket):
-    service = host.service("CCURtimemon")
-    assert service.is_enabled
-    assert service.is_running
-    timemon = Process.get(ppid='1', comm="timemon")
-    assert timemon.user == "root"
-    assert timemon.group == "root"
-    assert Socket("tcp://0.0.0.0:8099").is_listening
     assert host.file("/var/log/timemon.log").is_file
     assert host.file("/var/log/timemon.log").user == 'root'
     assert host.file("/var/log/timemon.log").group == 'root'
+    assert host.file("/var/log/timemon.log").mode == 0o644
 
 # http session management daemon
 def test_httpsmd_running(host, Process, Service, Socket, Command):
@@ -331,9 +314,11 @@ def test_httpsmd_running(host, Process, Service, Socket, Command):
     assert host.file("/var/log/httpsm.log").is_file
     assert host.file("/var/log/httpsm.log").user == 'root'
     assert host.file("/var/log/httpsm.log").group == 'root'
+    assert host.file("/var/log/httpsm.log").mode == 0o644
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").is_file
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").user == 'root'
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").group == 'root'
+    assert host.file("/etc/opt/MediaHawk/httpsm.cfg").mode == 0o644
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("SM-ServicePort = 8078")
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("SM-SchedulingPriority = 20")
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("SM-RPCThreadCount = 256")
@@ -368,6 +353,7 @@ def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     assert host.file("/etc/gssproxy/gssproxy.conf").is_file
     assert host.file("/etc/gssproxy/gssproxy.conf").user == 'root'
     assert host.file("/etc/gssproxy/gssproxy.conf").group == 'root'
+    assert host.file("/etc/gssproxy/gssproxy.conf").mode == 0o644
     assert host.file("/etc/gssproxy/gssproxy.conf").contains("mechs = krb5")
     assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_store = keytab:/etc/gssproxy/http.keytab")
     assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_store = ccache:/var/lib/gssproxy/clients/krb5cc_%U")
