@@ -339,6 +339,11 @@ def test_httpsmd_running(host, Process, Service, Socket, Command):
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("FRM-Port = 8020")
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("Log-Level = 20")
     assert host.file("/etc/opt/MediaHawk/httpsm.cfg").contains("Log-FilePath = /var/log/httpsm.log")
+    assert host.file("/etc/sysconfig/CCURhttpSession").is_file
+    assert host.file("/etc/sysconfig/CCURhttpSession").user == 'root'
+    assert host.file("/etc/sysconfig/CCURhttpSession").group == 'root'
+    assert host.file("/etc/sysconfig/CCURhttpSession").mode == 0o644
+    assert host.file("/etc/sysconfig/CCURhttpSession").contains('HTTPSMD_OPTIONS="-log /var/log/httpsm.log"')
 
 def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     gssproxy = Process.get(ppid='1', comm="gssproxy")
