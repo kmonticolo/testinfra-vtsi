@@ -91,6 +91,13 @@ def test_CCURmhcm_service_exists(host, Process, Socket):
     assert host.file("/etc/opt/MediaHawk/mhcm.cfg").contains("Log-Level = 20")
     assert host.file("/etc/opt/MediaHawk/mhcm.cfg").contains("Log-FilePath = /var/log/mhcm.log")
     assert host.file("/etc/opt/MediaHawk/mhcm.cfg").contains("[DEBUG Group] ")
+    assert host.file("/etc/sysconfig/CCURmhcm").is_file
+    assert host.file("/etc/sysconfig/CCURmhcm").user == 'root'
+    assert host.file("/etc/sysconfig/CCURmhcm").group == 'root'
+    assert host.file("/etc/sysconfig/CCURmhcm").mode == 0o644
+    assert host.file("/etc/sysconfig/CCURmhcm").contains('MHCM_OPTIONS="-log /var/log/mhcm.log -ft"')
+    assert host.file("/etc/sysconfig/CCURmhcm").contains('MMTOOL_OPTIONS="--reserve=10"')
+
 
 def test_CCURmhfrm_service_exists(host):
     service = host.service("CCURmhfrm")
