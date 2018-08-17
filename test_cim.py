@@ -39,9 +39,22 @@ def test_gssproxy_running(host, File, Process, Service, Socket, Command):
     assert file.user == "root"
     assert file.group == "root"
     assert file.mode == 0o600
-    assert host.file("/etc/gssproxy/gssproxy.conf").is_file
-    assert host.file("/etc/gssproxy/gssproxy.conf").user == 'root'
-    assert host.file("/etc/gssproxy/gssproxy.conf").group == 'root'
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("mechs = krb5")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_store = keytab:/etc/gssproxy/http.keytab")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_store = ccache:/var/lib/gssproxy/clients/krb5cc_%U")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("euid = 48")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("mechs = krb5")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("socket = /run/gssproxy.sock")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_store = keytab:/etc/krb5.keytab")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("trusted = yes")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("kernel_nfsd = yes")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("euid = 0")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_store = keytab:/etc/krb5.keytab")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_store = ccache:FILE:/var/lib/gssproxy/clients/krb5cc_%U")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_store = client_keytab:/var/lib/gssproxy/clients/%U.keytab")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("cred_usage = initiate")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("allow_any_uid = yes")
+    assert host.file("/etc/gssproxy/gssproxy.conf").contains("trusted = yes")
 
 def test_CCURcim_service_exists(host, Process, Socket, Command):
     service = host.service("CCURcim")
