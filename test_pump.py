@@ -36,6 +36,7 @@ def test_CCURlighttpd_service_exists(host, Process, Socket, Command):
     assert host.file("/opt/MediaHawk/lib64/lighttpd").is_directory
     assert host.file("/opt/MediaHawk/lib64/lighttpd").user == 'root'
     assert host.file("/opt/MediaHawk/lib64/lighttpd").group == 'root'
+    assert host.file("/opt/MediaHawk/lib64/lighttpd").mode == 0o755
     command = Command('echo "GET /index.html" | nc 0.0.0.0 80 | grep lighttpd')
     assert command.stdout.rstrip() == 'Server: MediaHawk mhue lighttpd'
     assert command.rc == 0
@@ -118,6 +119,7 @@ def test_CCURmhgs_service_exists(host, Process, Socket):
     assert host.file("/var/log/mhgs.log").is_file
     assert host.file("/var/log/mhgs.log").user == 'root'
     assert host.file("/var/log/mhgs.log").group == 'root'
+    assert host.file("/var/log/mhgs.log").mode == 0o644
 
 def test_CCURmhrtc_service_exists(host, Process, Socket):
     service = host.service("CCURmhrtc")
@@ -132,6 +134,7 @@ def test_CCURmhrtc_service_exists(host, Process, Socket):
     assert host.file("/var/log/mhrtc.log").is_file
     assert host.file("/var/log/mhrtc.log").user == 'root'
     assert host.file("/var/log/mhrtc.log").group == 'root'
+    assert host.file("/var/log/mhrtc.log").mode == 0o644
 
 
 
@@ -150,6 +153,7 @@ def test_CCURmhsp_service_exists(host, Process, Socket):
     assert host.file("/var/log/mhsp.log").is_file
     assert host.file("/var/log/mhsp.log").user == 'root'
     assert host.file("/var/log/mhsp.log").group == 'root'
+    assert host.file("/var/log/mhsp.log").mode == 0o644
 
 def test_CCURmhstore_service_exists(host):
     service = host.service("CCURmhstore")
@@ -166,9 +170,11 @@ def test_CCURmhue_service_exists(host, Process):
     assert host.file("/var/log/mhuemon.log").is_file
     assert host.file("/var/log/mhuemon.log").user == 'root'
     assert host.file("/var/log/mhuemon.log").group == 'root'
+    assert host.file("/var/log/mhuemon.log").mode == 0o644
     assert host.file("/etc/opt/MediaHawk/mhue.conf").is_file
     assert host.file("/etc/opt/MediaHawk/mhue.conf").user == 'root'
     assert host.file("/etc/opt/MediaHawk/mhue.conf").group == 'root'
+    assert host.file("/etc/opt/MediaHawk/mhue.conf").mode == 0o644
     assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.document-root        = "/var/lib/MediaHawk/Edge/webroot/"')
     assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.errorlog             = "/var/log/mhue_error.log"')
     assert host.file("/etc/opt/MediaHawk/mhue.conf").contains('server.core-files           = "enable"')
@@ -209,6 +215,7 @@ def test_CCURmhvp_service_exists(host, Process, Socket):
     assert host.file("/var/log/mhvp.log").is_file
     assert host.file("/var/log/mhvp.log").user == 'root'
     assert host.file("/var/log/mhvp.log").group == 'root'
+    assert host.file("/var/log/mhvp.log").mode == 0o644
 
 def test_CCURredis_service_exists(host, Process, Socket, Command):
     service = host.service("CCURredis")
@@ -224,6 +231,7 @@ def test_CCURredis_service_exists(host, Process, Socket, Command):
     assert host.file("/etc/opt/MediaHawk/redis.conf").is_file
     assert host.file("/etc/opt/MediaHawk/redis.conf").user == 'root'
     assert host.file("/etc/opt/MediaHawk/redis.conf").group == 'root'
+    assert host.file("/etc/opt/MediaHawk/redis.conf").mode == 0o644
     assert host.file("/etc/opt/MediaHawk/redis.conf").contains('daemonize no')
     assert host.file("/etc/opt/MediaHawk/redis.conf").contains('pidfile "/var/run/redis.pid"')
     assert host.file("/etc/opt/MediaHawk/redis.conf").contains('port 6379')
