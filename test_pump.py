@@ -295,6 +295,12 @@ def test_CCURredis_service_exists(host, Process, Socket, Command):
     assert host.file("/etc/opt/MediaHawk/redis.conf").contains('client-output-buffer-limit pubsub 32mb 8mb 60')
     assert host.file("/etc/opt/MediaHawk/redis.conf").contains('hz 10')
     assert host.file("/etc/opt/MediaHawk/redis.conf").contains('aof-rewrite-incremental-fsync yes')
+    assert host.file("/etc/sysconfig/CCURredis").is_file
+    assert host.file("/etc/sysconfig/CCURredis").user == 'root'
+    assert host.file("/etc/sysconfig/CCURredis").group == 'root'
+    assert host.file("/etc/sysconfig/CCURredis").mode == 0o644
+    assert host.file("/etc/sysconfig/CCURredis").contains('REDIS_OPTIONS=""')
+    assert host.file("/etc/sysconfig/CCURredis").contains('REDIS_CONF=/etc/opt/MediaHawk/redis.conf')
 
 def test_resource_cfg(host):
     assert host.file("/etc/opt/MediaHawk/resource.cfg").is_file
