@@ -273,6 +273,10 @@ def test_CCURredis_service_exists(host, Process, Socket, Command):
     assert host.file("/etc/opt/MediaHawk/redis.conf").contains('hz 10')
     assert host.file("/etc/opt/MediaHawk/redis.conf").contains('aof-rewrite-incremental-fsync yes')
 
+def test_resource_cfg(host):
+    assert host.file("/etc/opt/MediaHawk/resource.cfg").contains("Define:.*Disk.*1s0.*/r1.*VIRTUAL_1MB.**.*64")
+
+    
 def test_CCURtimemon_service_exists(host, Process, Socket):
     service = host.service("CCURtimemon")
     assert service.is_enabled
