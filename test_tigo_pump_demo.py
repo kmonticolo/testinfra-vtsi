@@ -14,10 +14,6 @@ def test_timezone_check(Command):
     assert command.stdout.rstrip() == '       Time zone: Europe/Warsaw (CEST, +0200)'
     assert command.rc == 0
 
-def test_ntpd_service_exists(host):
-    service = host.service("ntpd")
-    assert service.is_enabled
-
 def test_chronyd_service_exists(host):
     service = host.service("chronyd")
     assert service.is_enabled
@@ -450,7 +446,6 @@ def test_serv(host):
 "mcelog",
 "microcode",
 "multipathd",
-"ntpd",
 "postfix",
 "rsyslog",
 "smartd",
