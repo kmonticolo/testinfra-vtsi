@@ -34,7 +34,6 @@ def test_java_running(Process, Service, Socket, Command):
     assert Socket("tcp://127.0.0.1:32000").is_listening
     assert Socket("tcp://0.0.0.0:8080").is_listening
     assert Socket("tcp://0.0.0.0:9010").is_listening
-    assert Socket("tcp://0.0.0.0:10292").is_listening
     assert Socket("tcp://0.0.0.0:8021").is_listening
 
 def test_curl_cim(Command):
