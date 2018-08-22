@@ -343,9 +343,8 @@ def test_CCURtimemon_service_exists(host, Process, Socket):
     assert host.file("/etc/sysconfig/CCURtimemon").user == 'root'
     assert host.file("/etc/sysconfig/CCURtimemon").group == 'root'
     assert host.file("/etc/sysconfig/CCURtimemon").mode == 0o600
-    assert host.file("/etc/sysconfig/CCURtimemon").contains('EXTERNAL_TS=192.168.160.158')
+    assert host.file("/etc/sysconfig/CCURtimemon").contains('EXTERNAL_TS=10.48.77.8')
     assert host.file("/etc/sysconfig/CCURtimemon").contains('PRIMARY_TS=10.48.77.10') or host.file("/etc/sysconfig/CCURtimemon").contains('PRIMARY_TS=10.48.77.30')
-
 
 # http session management daemon
 def test_httpsmd_running(host, Process, Service, Socket, Command):
