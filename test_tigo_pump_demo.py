@@ -3,7 +3,7 @@ def test_ntp_conf(File):
     assert ntp_conf.user == "root"
     assert ntp_conf.group == "root"
     assert ntp_conf.mode == 0o644
-    assert ntp_conf.contains("server 192.168.160.158")
+    assert ntp_conf.contains("server 10.48.77.8")
 
 def test_NTP_time_accuracy(Command):
     command = Command('ntpstat')

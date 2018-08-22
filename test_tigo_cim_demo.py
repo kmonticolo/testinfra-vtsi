@@ -3,7 +3,7 @@ def test_ntp_conf(File):
     assert ntp_conf.user == "root"
     assert ntp_conf.group == "root"
     assert ntp_conf.mode == 0o644
-    assert ntp_conf.contains("server 192.168.160.158")
+    assert ntp_conf.contains("server 10.48.77.8")
 
 def test_NTP_time_accuracy(Command):
     command = Command('ntpstat')
@@ -69,7 +69,7 @@ def test_CCURcim_service_exists(host, Process, Socket, Command):
     assert host.file("/etc/opt/MediaHawk/cim.cfg").group == 'root'
     assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Log File Directory:  /var/log")
     assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Library Interface:  MHMP")
-    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Library Address: 10.48.77.30")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Library Address: 10.48.77.10")
     assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Library Volume Name Type: DiskSet")
     assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Library Default Volume: MediaHawk")
     assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("SNMP Trap Peername:   127.0.0.1:162")
@@ -91,7 +91,7 @@ def test_CCURcim_service_exists(host, Process, Socket, Command):
     assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Content Byte Per Second: 1048576")
     assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Content Average Seconds: 7200")
     assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("eFO Pp Reload Seconds: 60")
-    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("CIM Virtual IP: 10.48.77.29")
+    assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("CIM Virtual IP: 10.48.77.9")
     assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Package Data Retention Period:  2592000")
     assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Enable Rule Based Provision: true")
     assert host.file("/etc/opt/MediaHawk/cim.cfg").contains("Retain Transformed ADI File: false")
